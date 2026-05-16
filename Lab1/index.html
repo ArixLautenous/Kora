@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Cửa hàng sản phẩm công nghệ cao cấp - Tìm kiếm những sản phẩm tốt nhất với giá cả hợp lý." />
+  <title>KoraStore – Cửa Hàng Công Nghệ</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="#" class="logo">
+        <i class="fa-solid fa-bolt logo__icon"></i>
+        <span>Kora<strong>Store</strong></span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Mở menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="mainNav">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <a href="#home" class="nav__link active">
+              <i class="fa-solid fa-house"></i> Trang chủ
+            </a>
+          </li>
+          <li class="nav__item">
+            <a href="#products" class="nav__link">
+              <i class="fa-solid fa-box-open"></i> Sản phẩm
+            </a>
+          </li>
+          <li class="nav__item">
+            <a href="#contact" class="nav__link">
+              <i class="fa-solid fa-envelope"></i> Liên hệ
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="home">
+    <div class="hero__content">
+      <span class="hero__badge">🔥 Siêu Khuyến Mãi</span>
+      <h1 class="hero__title">Công nghệ đỉnh cao<br /><span class="gradient-text">trong tầm tay bạn</span></h1>
+      <p class="hero__subtitle">Khám phá hàng nghìn sản phẩm công nghệ chính hãng, giao hàng nhanh toàn quốc.</p>
+      <a href="#products" class="btn btn--primary">Mua sắm ngay <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="hero__decoration" aria-hidden="true">
+      <div class="orb orb--1"></div>
+      <div class="orb orb--2"></div>
+      <div class="orb orb--3"></div>
+    </div>
+  </section>
+
+  <!-- ========== MAIN (2 columns) ========== -->
+  <main class="main-grid" id="products">
+    <!-- ===== LEFT: PRODUCT LIST ===== -->
+    <section class="products-section">
+      <div class="section-header">
+        <h2 class="section-title">Sản phẩm nổi bật</h2>
+        <p class="section-subtitle">Những sản phẩm được yêu thích nhất tuần này</p>
+      </div>
+
+      <div class="product-grid">
+
+        <!-- Product 1 -->
+        <article class="product-card" id="product-1">
+          <div class="product-card__badge">Mới</div>
+          <div class="product-card__img-wrap">
+            <a href="product-detail.html?id=1" class="product-card__link">
+              <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=280&fit=crop&auto=format"
+                alt="Điện thoại thông minh iPhone 15 Pro" class="product-card__img" loading="lazy" />
+            </a>
+            <div class="product-card__overlay">
+              <button class="overlay-btn"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</button>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Điện thoại</span>
+            <h3 class="product-card__name"><a href="product-detail.html?id=1" class="product-card__name-link">iPhone 15 Pro Max</a></h3>
+            <p class="product-card__desc">Chip A17 Pro, camera 48MP, màn hình 6.7" Super Retina XDR ProMotion 120Hz cực
+              sắc nét.</p>
+            <div class="product-card__footer">
+              <div class="product-card__price">
+                <span class="price--current">34.990.000₫</span>
+                <span class="price--old">39.990.000₫</span>
+              </div>
+              <div class="product-card__rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+                <span>4.5</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 2 -->
+        <article class="product-card" id="product-2">
+          <div class="product-card__badge product-card__badge--sale">-20%</div>
+          <div class="product-card__img-wrap">
+            <a href="product-detail.html?id=2" class="product-card__link">
+              <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=280&fit=crop&auto=format"
+                alt="Laptop MacBook Pro 14 inch" class="product-card__img" loading="lazy" />
+            </a>
+            <div class="product-card__overlay">
+              <button class="overlay-btn"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</button>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Laptop</span>
+            <h3 class="product-card__name"><a href="product-detail.html?id=2" class="product-card__name-link">MacBook Pro 14" M3</a></h3>
+            <p class="product-card__desc">Chip Apple M3 mạnh mẽ, màn hình Liquid Retina XDR, pin lên đến 22 giờ sử dụng
+              liên tục.</p>
+            <div class="product-card__footer">
+              <div class="product-card__price">
+                <span class="price--current">44.990.000₫</span>
+                <span class="price--old">54.990.000₫</span>
+              </div>
+              <div class="product-card__rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <span>5.0</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 3 -->
+        <article class="product-card" id="product-3">
+          <div class="product-card__img-wrap">
+            <a href="product-detail.html?id=3" class="product-card__link">
+              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=280&fit=crop&auto=format"
+                alt="Tai nghe không dây Sony WH-1000XM5" class="product-card__img" loading="lazy" />
+            </a>
+            <div class="product-card__overlay">
+              <button class="overlay-btn"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</button>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Âm thanh</span>
+            <h3 class="product-card__name"><a href="product-detail.html?id=3" class="product-card__name-link">Sony WH-1000XM5</a></h3>
+            <p class="product-card__desc">Chống ồn chủ động hàng đầu, pin 30 giờ, kết nối đa điểm, chất lượng âm thanh
+              Hi-Res.</p>
+            <div class="product-card__footer">
+              <div class="product-card__price">
+                <span class="price--current">7.990.000₫</span>
+                <span class="price--old">9.490.000₫</span>
+              </div>
+              <div class="product-card__rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star"></i>
+                <span>4.0</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 4 -->
+        <article class="product-card" id="product-4">
+          <div class="product-card__badge">Hot</div>
+          <div class="product-card__img-wrap">
+            <a href="product-detail.html?id=4" class="product-card__link">
+              <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=280&fit=crop&auto=format"
+                alt="Đồng hồ thông minh Samsung Galaxy Watch" class="product-card__img" loading="lazy" />
+            </a>
+            <div class="product-card__overlay">
+              <button class="overlay-btn"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</button>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Wearable</span>
+            <h3 class="product-card__name"><a href="product-detail.html?id=4" class="product-card__name-link">Samsung Galaxy Watch 7</a></h3>
+            <p class="product-card__desc">Theo dõi sức khoẻ toàn diện, thiết kế siêu mỏng, chống nước 5ATM, GPS chính
+              xác cao.</p>
+            <div class="product-card__footer">
+              <div class="product-card__price">
+                <span class="price--current">6.490.000₫</span>
+                <span class="price--old">7.990.000₫</span>
+              </div>
+              <div class="product-card__rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+                <span>4.5</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 5 -->
+        <article class="product-card" id="product-5">
+          <div class="product-card__badge product-card__badge--sale">-15%</div>
+          <div class="product-card__img-wrap">
+            <a href="product-detail.html?id=5" class="product-card__link">
+              <img src="https://images.unsplash.com/photo-1585770536735-27993a5b5b87?w=400&h=280&fit=crop&auto=format"
+                alt="Máy tính bảng iPad Air" class="product-card__img" loading="lazy" />
+            </a>
+            <div class="product-card__overlay">
+              <button class="overlay-btn"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</button>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Máy tính bảng</span>
+            <h3 class="product-card__name"><a href="product-detail.html?id=5" class="product-card__name-link">iPad Air M2 11"</a></h3>
+            <p class="product-card__desc">Chip M2 ấn tượng, màn hình Liquid Retina 11 inch, hỗ trợ Apple Pencil Pro và
+              Magic Keyboard.</p>
+            <div class="product-card__footer">
+              <div class="product-card__price">
+                <span class="price--current">18.490.000₫</span>
+                <span class="price--old">21.490.000₫</span>
+              </div>
+              <div class="product-card__rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+                <span>4.7</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 6 -->
+        <article class="product-card" id="product-6">
+          <div class="product-card__img-wrap">
+            <a href="product-detail.html?id=6" class="product-card__link">
+              <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=280&fit=crop&auto=format"
+                alt="Laptop gaming ASUS ROG" class="product-card__img" loading="lazy" />
+            </a>
+            <div class="product-card__overlay">
+              <button class="overlay-btn"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</button>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__category">Gaming</span>
+            <h3 class="product-card__name"><a href="product-detail.html?id=6" class="product-card__name-link">ASUS ROG Zephyrus G16</a></h3>
+            <p class="product-card__desc">RTX 4080, Intel Core i9, RAM 32GB DDR5, màn hình 240Hz QHD, thiết kế gaming
+              cao cấp.</p>
+            <div class="product-card__footer">
+              <div class="product-card__price">
+                <span class="price--current">62.990.000₫</span>
+                <span class="price--old">68.000.000₫</span>
+              </div>
+              <div class="product-card__rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <span>4.9</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /.product-grid -->
+    </section><!-- /.products-section -->
+
+    <!-- ===== RIGHT: SIDEBAR ===== -->
+    <aside class="sidebar" id="social">
+      <!-- Theo dõi chúng tôi -->
+      <div class="sidebar-widget" id="widget-social">
+        <h2 class="widget-title"><i class="fa-solid fa-share-nodes"></i> Theo dõi chúng tôi</h2>
+        <p class="widget-desc">Kết nối với chúng tôi trên mạng xã hội để nhận ưu đãi độc quyền!</p>
+        <ul class="social-list">
+          <li class="social-list__item">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+              class="social-link social-link--facebook" id="link-facebook">
+              <span class="social-link__icon"><i class="fa-brands fa-facebook-f"></i></span>
+              <span class="social-link__info">
+                <strong>Facebook</strong>
+                <small>125K người theo dõi</small>
+              </span>
+              <i class="fa-solid fa-chevron-right social-link__arrow"></i>
+            </a>
+          </li>
+          <li class="social-list__item">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+              class="social-link social-link--twitter" id="link-twitter">
+              <span class="social-link__icon"><i class="fa-brands fa-x-twitter"></i></span>
+              <span class="social-link__info">
+                <strong>X (Twitter)</strong>
+                <small>48K người theo dõi</small>
+              </span>
+              <i class="fa-solid fa-chevron-right social-link__arrow"></i>
+            </a>
+          </li>
+          <li class="social-list__item">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+              class="social-link social-link--instagram" id="link-instagram">
+              <span class="social-link__icon"><i class="fa-brands fa-instagram"></i></span>
+              <span class="social-link__info">
+                <strong>Instagram</strong>
+                <small>87K người theo dõi</small>
+              </span>
+              <i class="fa-solid fa-chevron-right social-link__arrow"></i>
+            </a>
+          </li>
+          <li class="social-list__item">
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
+              class="social-link social-link--youtube" id="link-youtube">
+              <span class="social-link__icon"><i class="fa-brands fa-youtube"></i></span>
+              <span class="social-link__info">
+                <strong>YouTube</strong>
+                <small>210K subscribers</small>
+              </span>
+              <i class="fa-solid fa-chevron-right social-link__arrow"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Widget: Khuyến mãi -->
+      <div class="sidebar-widget sidebar-widget--promo" id="widget-promo">
+        <div class="promo-badge">🎁 Ưu đãi hôm nay</div>
+        <h3 class="promo-title">Giảm thêm 10%</h3>
+        <p class="promo-desc">Dùng mã <strong class="promo-code">TECH10</strong> khi thanh toán để được giảm thêm 10%
+          cho đơn hàng đầu tiên.</p>
+        <button class="btn btn--secondary btn--full" id="btn-copy-code">
+          <i class="fa-regular fa-copy"></i> Sao chép mã
+        </button>
+      </div>
+
+      <!-- Widget: Tin tức -->
+      <div class="sidebar-widget" id="widget-news">
+        <h2 class="widget-title"><i class="fa-solid fa-newspaper"></i> Tin tức mới nhất</h2>
+        <ul class="news-list">
+          <li class="news-item">
+            <a href="#" class="news-link" id="news-1">
+              <div class="news-meta"><i class="fa-regular fa-clock"></i> 2 giờ trước</div>
+              <p>Apple ra mắt iOS 18.5 với nhiều tính năng AI đột phá mới</p>
+            </a>
+          </li>
+          <li class="news-item">
+            <a href="#" class="news-link" id="news-2">
+              <div class="news-meta"><i class="fa-regular fa-clock"></i> 5 giờ trước</div>
+              <p>Samsung Galaxy S25 FE lộ diện với cấu hình ấn tượng hơn kỳ vọng</p>
+            </a>
+          </li>
+          <li class="news-item">
+            <a href="#" class="news-link" id="news-3">
+              <div class="news-meta"><i class="fa-regular fa-clock"></i> 1 ngày trước</div>
+              <p>NVIDIA GeForce RTX 5090 chính thức ra mắt tại Việt Nam</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside><!-- /.sidebar -->
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" id="contact">
+    <div class="footer__top">
+      <div class="footer-grid">
+        <!-- Col 1: Brand -->
+        <div class="footer-col" id="footer-brand">
+          <a href="#" class="logo logo--light">
+            <i class="fa-solid fa-bolt logo__icon"></i>
+            <span>Kora<strong>Store</strong></span>
+          </a>
+          <p class="footer-col__desc">Cửa hàng công nghệ hàng đầu Việt Nam với hơn 10 năm kinh nghiệm, cam kết sản phẩm
+            chính hãng 100%.</p>
+          <div class="footer-socials">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn"
+              id="footer-fb" aria-label="Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn"
+              id="footer-tw" aria-label="Twitter">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn"
+              id="footer-ig" aria-label="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn"
+              id="footer-yt" aria-label="YouTube">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Links -->
+        <div class="footer-col" id="footer-links">
+          <h3 class="footer-col__title">Liên kết nhanh</h3>
+          <ul class="footer-nav">
+            <li><a href="#home" class="footer-nav__link" id="f-link-home"><i class="fa-solid fa-chevron-right"></i>
+                Trang chủ</a></li>
+            <li><a href="#products" class="footer-nav__link" id="f-link-products"><i
+                  class="fa-solid fa-chevron-right"></i> Sản phẩm</a></li>
+            <li><a href="#contact" class="footer-nav__link" id="f-link-contact"><i
+                  class="fa-solid fa-chevron-right"></i> Liên hệ</a></li>
+            <li><a href="#" class="footer-nav__link" id="f-link-policy"><i class="fa-solid fa-chevron-right"></i> Chính
+                sách bảo hành</a></li>
+            <li><a href="#" class="footer-nav__link" id="f-link-return"><i class="fa-solid fa-chevron-right"></i> Chính
+                sách đổi trả</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Contact -->
+        <div class="footer-col" id="footer-contact">
+          <h3 class="footer-col__title">Thông tin liên hệ</h3>
+          <ul class="contact-info">
+            <li class="contact-info__item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>123 Đường Công Nghệ, Quận 1, TP. Hồ Chí Minh</span>
+            </li>
+            <li class="contact-info__item">
+              <i class="fa-solid fa-phone"></i>
+              <a href="tel:+84901234567" id="footer-phone">0901 234 567</a>
+            </li>
+            <li class="contact-info__item">
+              <i class="fa-solid fa-envelope"></i>
+              <a href="mailto:contact@techstore.vn" id="footer-email">contact@techstore.vn</a>
+            </li>
+            <li class="contact-info__item">
+              <i class="fa-regular fa-clock"></i>
+              <span>Thứ 2 – Chủ nhật: 8:00 – 21:00</span>
+            </li>
+          </ul>
+        </div>
+      </div><!-- /.footer-grid -->
+    </div><!-- /.footer__top -->
+
+    <div class="footer__bottom">
+      <p>© 2025 <strong>TechStore</strong>. Tất cả quyền được bảo lưu.</p>
+      <p>Thiết kế với <i class="fa-solid fa-heart" style="color:#f87171;"></i> tại Việt Nam</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const mainNav = document.getElementById('mainNav');
+    navToggle.addEventListener('click', () => {
+      mainNav.classList.toggle('nav--open');
+      navToggle.classList.toggle('nav-toggle--active');
+    });
+
+    // Copy promo code
+    const btnCopy = document.getElementById('btn-copy-code');
+    if (btnCopy) {
+      btnCopy.addEventListener('click', () => {
+        navigator.clipboard.writeText('TECH10').then(() => {
+          const orig = btnCopy.innerHTML;
+          btnCopy.innerHTML = '<i class="fa-solid fa-check"></i> Đã sao chép!';
+          setTimeout(() => { btnCopy.innerHTML = orig; }, 2000);
+        });
+      });
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+          mainNav.classList.remove('nav--open');
+          navToggle.classList.remove('nav-toggle--active');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
