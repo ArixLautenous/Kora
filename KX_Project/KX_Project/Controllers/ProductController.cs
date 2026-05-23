@@ -46,6 +46,8 @@ public class ProductController : Controller
             _productRepository.Add(product);
             return RedirectToAction("Index"); // Chuyển hướng tới trang danh sách sản phẩm
         }
+        var categories = _categoryRepository.GetAllCategories();
+        ViewBag.Categories = new SelectList(categories, "Id", "Name");
         return View(product);
     }
     // Các actions khác như Display, Update, Delete
@@ -63,6 +65,22 @@ public class ProductController : Controller
         {
             return NotFound();
         }
+        var relatedProducts = _productRepository.GetAll()
+            .Where(p => p.Id != id && p.CategoryId == product.CategoryId)
+            .Take(4)
+            .ToList();
+        
+        // If not enough products in same category, get any
+        if (relatedProducts.Count < 4)
+        {
+            var moreProducts = _productRepository.GetAll()
+                .Where(p => p.Id != id && !relatedProducts.Any(rp => rp.Id == p.Id))
+                .Take(4 - relatedProducts.Count)
+                .ToList();
+            relatedProducts.AddRange(moreProducts);
+        }
+        
+        ViewBag.RelatedProducts = relatedProducts;
         return View(product);
     }
     // Show the product update form
@@ -73,6 +91,8 @@ public class ProductController : Controller
         {
             return NotFound();
         }
+        var categories = _categoryRepository.GetAllCategories();
+        ViewBag.Categories = new SelectList(categories, "Id", "Name");
         return View(product);
     }
     // Process the product update
@@ -108,6 +128,8 @@ public class ProductController : Controller
             _productRepository.Update(product);
             return RedirectToAction("Index");
         }
+        var categories = _categoryRepository.GetAllCategories();
+        ViewBag.Categories = new SelectList(categories, "Id", "Name");
         return View(product);
     }
     // Show the product delete confirmation

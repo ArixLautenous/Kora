@@ -11,6 +11,7 @@ namespace KX_Project.Repositories
 {
 new Category { Id = 1, Name = "Laptop" },
 new Category { Id = 2, Name = "Desktop" },
+new Category { Id = 3, Name = "Điện Thoại" },
 // Thêm các category khác
 };
         }
