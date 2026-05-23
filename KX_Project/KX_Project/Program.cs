@@ -1,4 +1,17 @@
 using KX_Project.Repositories;
+using System.IO;
+
+// Ensure the application runs from the project root so it can find the wwwroot folder
+var currentDir = Directory.GetCurrentDirectory();
+if (!Directory.Exists(Path.Combine(currentDir, "wwwroot")))
+{
+    // If run directly from bin\Debug\net..., the project root is 3 levels up
+    var projectDir = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\.."));
+    if (Directory.Exists(Path.Combine(projectDir, "wwwroot")))
+    {
+        Directory.SetCurrentDirectory(projectDir);
+    }
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,12 +38,11 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
+app.UseStaticFiles();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Product}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Product}/{action=Index}/{id?}");
 
 
 app.Run();
