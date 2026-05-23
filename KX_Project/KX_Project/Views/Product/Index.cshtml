@@ -1,27 +1,45 @@
-﻿@model IEnumerable<KX_Project.Models.Product>
-<h2>Products</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model)
-        {
-            <tr>
-                <td>@product.Name</td>
-                <td>@product.Price</td>
-                <td>@product.Description</td>
-                <td>
-                    <a asp-action="Display" asp-route-id="@product.Id">View</a> |
-                    <a asp-action="Update" asp-route-id="@product.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@product.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@model IEnumerable<KX_Project.Models.Product>
+
+@{
+    ViewData["Title"] = "Sản phẩm";
+    ViewData["ShowHero"] = true;
+}
+
+<div class="section-header">
+  <h2 class="section-title">Sản phẩm nổi bật</h2>
+  <p class="section-subtitle">Những sản phẩm được yêu thích nhất tuần này</p>
+</div>
+
+<div class="product-grid">
+    @foreach (var product in Model)
+    {
+        <article class="product-card" id="product-@product.Id">
+            <div class="product-card__img-wrap">
+                <a asp-action="Display" asp-route-id="@product.Id" class="product-card__link">
+                    <!-- Placeholder image since Product model doesn't have ImageUrl yet -->
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=280&fit=crop&auto=format"
+                        alt="@product.Name" class="product-card__img" loading="lazy" />
+                </a>
+                <div class="product-card__overlay">
+                    <button class="overlay-btn"><i class="fa-solid fa-cart-shopping"></i> Thêm</button>
+                </div>
+            </div>
+            <div class="product-card__body">
+                <span class="product-card__category">Công nghệ</span>
+                <h3 class="product-card__name">
+                    <a asp-action="Display" asp-route-id="@product.Id" class="product-card__name-link">@product.Name</a>
+                </h3>
+                <p class="product-card__desc">@product.Description</p>
+                <div class="product-card__footer">
+                    <div class="product-card__price">
+                        <span class="price--current">@product.Price.ToString("N0")₫</span>
+                    </div>
+                    <div class="product-card__rating" style="display:flex;gap:0.5rem">
+                        <a asp-action="Update" asp-route-id="@product.Id" title="Sửa"><i class="fa-solid fa-pen" style="color:var(--clr-text-muted)"></i></a>
+                        <a asp-action="Delete" asp-route-id="@product.Id" title="Xóa"><i class="fa-solid fa-trash" style="color:var(--clr-accent)"></i></a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    }
+</div>
