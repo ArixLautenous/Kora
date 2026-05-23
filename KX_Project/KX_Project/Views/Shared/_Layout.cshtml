@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Cửa hàng sản phẩm công nghệ cao cấp - Tìm kiếm những sản phẩm tốt nhất với giá cả hợp lý." />
+  <title>@ViewData["Title"] - KoraStore</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header class="header">
+    <div class="header__inner">
+      <a asp-controller="Product" asp-action="Index" class="logo">
+        <i class="fa-solid fa-bolt logo__icon"></i>
+        <span>Kora<strong>Store</strong></span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Mở menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="mainNav">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <a asp-controller="Product" asp-action="Index" class="nav__link active">
+              <i class="fa-solid fa-box-open"></i> Sản phẩm
+            </a>
+          </li>
+          <li class="nav__item">
+            <a asp-controller="Product" asp-action="Add" class="nav__link">
+              <i class="fa-solid fa-plus"></i> Thêm mới
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  @if (ViewData["ShowHero"] as bool? == true)
+  {
+  <section class="hero" id="home">
+    <div class="hero__content">
+      <span class="hero__badge">🔥 Siêu Khuyến Mãi</span>
+      <h1 class="hero__title">Công nghệ đỉnh cao<br /><span class="gradient-text">trong tầm tay bạn</span></h1>
+      <p class="hero__subtitle">Khám phá hàng nghìn sản phẩm công nghệ chính hãng, giao hàng nhanh toàn quốc.</p>
+      <a href="#products" class="btn btn--primary">Mua sắm ngay <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="hero__decoration" aria-hidden="true">
+      <div class="orb orb--1"></div>
+      <div class="orb orb--2"></div>
+      <div class="orb orb--3"></div>
+    </div>
+  </section>
+  }
+
+  <!-- ========== MAIN (2 columns) ========== -->
+  <main class="main-grid" id="products">
+    <!-- ===== LEFT: MAIN CONTENT ===== -->
+    <section class="products-section">
+      @RenderBody()
+    </section>
+
+    <!-- ===== RIGHT: SIDEBAR ===== -->
+    <aside class="sidebar" id="social">
+      <!-- Theo dõi chúng tôi -->
+      <div class="sidebar-widget" id="widget-social">
+        <h2 class="widget-title"><i class="fa-solid fa-share-nodes"></i> Theo dõi chúng tôi</h2>
+        <p class="widget-desc">Kết nối với chúng tôi trên mạng xã hội để nhận ưu đãi độc quyền!</p>
+        <ul class="social-list">
+          <li class="social-list__item">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+              class="social-link social-link--facebook" id="link-facebook">
+              <span class="social-link__icon"><i class="fa-brands fa-facebook-f"></i></span>
+              <span class="social-link__info">
+                <strong>Facebook</strong>
+                <small>125K người theo dõi</small>
+              </span>
+              <i class="fa-solid fa-chevron-right social-link__arrow"></i>
+            </a>
+          </li>
+          <li class="social-list__item">
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
+              class="social-link social-link--youtube" id="link-youtube">
+              <span class="social-link__icon"><i class="fa-brands fa-youtube"></i></span>
+              <span class="social-link__info">
+                <strong>YouTube</strong>
+                <small>210K subscribers</small>
+              </span>
+              <i class="fa-solid fa-chevron-right social-link__arrow"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Widget: Khuyến mãi -->
+      <div class="sidebar-widget sidebar-widget--promo" id="widget-promo">
+        <div class="promo-badge">🎁 Ưu đãi hôm nay</div>
+        <h3 class="promo-title">Giảm thêm 10%</h3>
+        <p class="promo-desc">Dùng mã <strong class="promo-code">TECH10</strong> khi thanh toán để được giảm thêm 10%
+          cho đơn hàng đầu tiên.</p>
+        <button class="btn btn--secondary btn--full" id="btn-copy-code">
+          <i class="fa-regular fa-copy"></i> Sao chép mã
+        </button>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" id="contact">
+    <div class="footer__bottom">
+      <p>© 2026 <strong>KoraStore</strong>. Tất cả quyền được bảo lưu.</p>
+    </div>
+  </footer>
+
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/js/site.js" asp-append-version="true"></script>
+  @await RenderSectionAsync("Scripts", required: false)
+
+  <script>
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const mainNav = document.getElementById('mainNav');
+    if(navToggle) {
+        navToggle.addEventListener('click', () => {
+        mainNav.classList.toggle('nav--open');
+        navToggle.classList.toggle('nav-toggle--active');
+        });
+    }
+
+    // Copy promo code
+    const btnCopy = document.getElementById('btn-copy-code');
+    if (btnCopy) {
+      btnCopy.addEventListener('click', () => {
+        navigator.clipboard.writeText('TECH10').then(() => {
+          const orig = btnCopy.innerHTML;
+          btnCopy.innerHTML = '<i class="fa-solid fa-check"></i> Đã sao chép!';
+          setTimeout(() => { btnCopy.innerHTML = orig; }, 2000);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
