@@ -9,7 +9,16 @@ public class MockProductRepository : IProductRepository
         // Tạo một số dữ liệu mẫu
         _products = new List<Product>
 {
-new Product { Id = 1, Name = "iPhone 12 Pro Max", Price = 10990000, Description = "A flagship smartphone"},
+new Product { Id = 1, Name = "iPhone 12 Pro Max", Price = 10990000, Description = "An old flagship smartphone"},
+new Product { Id = 2, Name = "OnePlus 15", Price = 18990000, Description = "A flagship smartphone"},
+new Product { Id = 3, Name = "Samsung Galaxy A37", Price = 9990000, Description = "A mid-range smartphone"},
+new Product { Id = 4, Name = "Xiaomi 17 Max", Price = 27990000, Description = "A flagship smartphone"},
+new Product { Id = 5, Name = "vivo X300 Pro", Price = 23990000, Description = "A flagship smartphone"},
+new Product { Id = 6, Name = "OPPO Reno 15F", Price = 10990000, Description = "A mid-range smartphone"},
+new Product { Id = 7, Name = "Samsung Galaxy Z Fold7", Price = 40990000, Description = "A foldable smartphone"},
+new Product { Id = 8, Name = "iPhone 17 Pro Max", Price = 37990000, Description = "A flagship smartphone"},
+new Product { Id = 9, Name = "Samsung Galaxy S26+", Price = 22990000, Description = "A flagship smartphone"},
+
 // Thêm các sản phẩm khác
 };
     }
