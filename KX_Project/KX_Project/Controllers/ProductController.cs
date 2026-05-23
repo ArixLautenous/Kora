@@ -1,4 +1,4 @@
-﻿using KX_Project.Models;
+using KX_Project.Models;
 using KX_Project.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,11 +7,14 @@ public class ProductController : Controller
 {
     private readonly IProductRepository _productRepository;
     private readonly ICategoryRepository _categoryRepository;
+    private readonly IWebHostEnvironment _hostingEnvironment;
     public ProductController(IProductRepository productRepository,
-    ICategoryRepository categoryRepository)
+    ICategoryRepository categoryRepository,
+    IWebHostEnvironment hostingEnvironment)
     {
         _productRepository = productRepository;
         _categoryRepository = categoryRepository;
+        _hostingEnvironment = hostingEnvironment;
     }
 
     public IActionResult Add()
@@ -21,10 +24,25 @@ public class ProductController : Controller
         return View();
     }
     [HttpPost]
-    public IActionResult Add(Product product)
+    public IActionResult Add(Product product, IFormFile? imageFile)
     {
         if (ModelState.IsValid)
         {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    imageFile.CopyTo(fileStream);
+                }
+                product.ImageUrl = "/images/" + uniqueFileName;
+            }
             _productRepository.Add(product);
             return RedirectToAction("Index"); // Chuyển hướng tới trang danh sách sản phẩm
         }
@@ -59,10 +77,34 @@ public class ProductController : Controller
     }
     // Process the product update
     [HttpPost]
-    public IActionResult Update(Product product)
+    public IActionResult Update(Product product, IFormFile? imageFile)
     {
         if (ModelState.IsValid)
         {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    imageFile.CopyTo(fileStream);
+                }
+                product.ImageUrl = "/images/" + uniqueFileName;
+            }
+            else
+            {
+                // Giữ nguyên ảnh cũ nếu không upload ảnh mới
+                var existingProduct = _productRepository.GetById(product.Id);
+                if (existingProduct != null)
+                {
+                    product.ImageUrl = existingProduct.ImageUrl;
+                }
+            }
             _productRepository.Update(product);
             return RedirectToAction("Index");
         }

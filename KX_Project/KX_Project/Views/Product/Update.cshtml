@@ -1,6 +1,6 @@
-﻿@model KX_Project.Models.Product
+@model KX_Project.Models.Product
 <h2>Edit Product</h2>
-<form asp-action="Update">
+<form asp-action="Update" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label asp-for="Name"></label>
@@ -18,7 +18,17 @@
         <textarea asp-for="Description" class="form-control"></textarea>
 
         <span asp-validation-for="Description" class="text-danger"></span>
-
+    </div>
+    <div class="form-group" style="margin-top:1rem; margin-bottom:1rem;">
+        <label>Hình ảnh sản phẩm (chọn file mới nếu muốn đổi ảnh)</label>
+        <input type="file" name="imageFile" class="form-control" accept="image/*" />
+        <input type="hidden" asp-for="ImageUrl" />
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <div style="margin-top: 10px;">
+                <img src="@Model.ImageUrl" alt="Current Image" style="max-width: 200px; max-height: 200px;" />
+            </div>
+        }
     </div>
     <button type="submit" class="btn btn-primary">Update</button>
 </form>

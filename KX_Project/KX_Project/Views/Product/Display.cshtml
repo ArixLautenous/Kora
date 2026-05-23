@@ -1,8 +1,95 @@
-﻿@model KX_Project.Models.Product
-<h2>Product Details</h2>
-<div>
-    <h4>Name: @Model.Name</h4>
-    <h4>Price: @Model.Price</h4>
-    <h4>Description: @Model.Description</h4>
+@model KX_Project.Models.Product
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+    var imgSrc = !string.IsNullOrEmpty(Model.ImageUrl) ? Model.ImageUrl : "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&h=600&fit=crop&auto=format";
+}
+
+<style>
+    .detail-card {
+      background: #fff;
+      border-radius: 1.1rem;
+      box-shadow: 0 4px 32px rgba(91,79,255,0.1);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .detail-img-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.1rem 0 0 1.1rem;
+      min-height: 420px;
+      background: #f5f6fb;
+    }
+    .detail-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .detail-img-wrap:hover img { transform: scale(1.04); }
+    .detail-info { padding: 2.5rem 2rem; }
+    .detail-category {
+      font-size: 0.75rem; font-weight: 700;
+      color: #5b4fff; text-transform: uppercase; letter-spacing: 0.07em;
+      margin-bottom: 0.5rem;
+    }
+    .detail-name { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .detail-price-current { font-size: 1.9rem; font-weight: 800; color: #e8000d; }
+    .detail-desc { color: #5a6282; line-height: 1.75; font-size: 0.95rem; margin: 1.25rem 0; }
+    .btn-add-cart {
+      background: linear-gradient(135deg,#5b4fff,#ff3f61);
+      border: 2px solid transparent; color: #fff; border-radius: 3rem;
+      height: 48px; padding: 0 1.75rem; font-weight: 700; font-size: 1rem;
+      box-shadow: 0 4px 20px rgba(91,79,255,0.35);
+      transition: all 0.3s ease;
+      display: inline-flex; align-items: center; justify-content: center;
+      line-height: 1;
+    }
+    .btn-add-cart:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(91,79,255,0.5); color:#fff; }
+    .btn-back {
+      border: 2px solid rgba(91,79,255,0.35); color: #5b4fff;
+      border-radius: 3rem; height: 48px; padding: 0 1.75rem;
+      font-weight: 600; font-size: 1rem; background: transparent; transition: all 0.25s;
+      text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+      line-height: 1;
+    }
+    .btn-back:hover { background: #5b4fff; color: #fff; border-color: #5b4fff; transform: translateY(-2px); text-decoration: none;}
+    @@media (max-width: 767px) {
+      .detail-img-wrap { min-height: 260px; border-radius: 1.1rem 1.1rem 0 0; }
+      .detail-info { padding: 1.5rem; }
+      .detail-name { font-size: 1.4rem; }
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="detail-card">
+      <div class="row g-0">
+        <!-- Image -->
+        <div class="col-md-6">
+          <div class="detail-img-wrap h-100">
+            <img src="@imgSrc" alt="@Model.Name" />
+          </div>
+        </div>
+        <!-- Info -->
+        <div class="col-md-6">
+          <div class="detail-info">
+            <div class="detail-category">Danh mục ID: @Model.CategoryId</div>
+            <h1 class="detail-name">@Model.Name</h1>
+
+            <div class="mb-3">
+              <span class="detail-price-current">@Model.Price.ToString("#,##0")₫</span>
+            </div>
+
+            <p class="detail-desc">@Model.Description</p>
+
+            <div class="d-flex align-items-center gap-3 mt-4">
+              <button class="btn btn-add-cart">
+                <i class="fa-solid fa-cart-shopping me-2"></i>Thêm vào giỏ hàng
+              </button>
+              <a asp-action="Index" class="btn-back">
+                <i class="fa-solid fa-arrow-left me-2"></i>Tiếp tục mua sắm
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
-<a asp-action="Index">Back to List</a>
