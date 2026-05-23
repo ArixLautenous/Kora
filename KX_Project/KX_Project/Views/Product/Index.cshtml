@@ -16,9 +16,15 @@
         <article class="product-card" id="product-@product.Id">
             <div class="product-card__img-wrap">
                 <a asp-action="Display" asp-route-id="@product.Id" class="product-card__link">
-                    <!-- Placeholder image since Product model doesn't have ImageUrl yet -->
-                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=280&fit=crop&auto=format"
-                        alt="@product.Name" class="product-card__img" loading="lazy" />
+                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        <img src="@product.ImageUrl" alt="@product.Name" class="product-card__img" loading="lazy" style="object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=280&fit=crop&auto=format"
+                            alt="@product.Name" class="product-card__img" loading="lazy" style="object-fit:cover;" />
+                    }
                 </a>
                 <div class="product-card__overlay">
                     <button class="overlay-btn"><i class="fa-solid fa-cart-shopping"></i> Thêm</button>
