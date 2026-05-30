@@ -47,6 +47,10 @@ secrets.json
 wwwroot/lib/
 wwwroot/.cache/
 
+# Uploaded images
+wwwroot/images/
+KX_Project/KX_Project/wwwroot/images/
+
 # ---- Node / npm (nếu dùng) ----
 node_modules/
 npm-debug.log*

@@ -1,132 +1,131 @@
 @model KX_Project.Models.Product
 @using Microsoft.AspNetCore.Mvc.Rendering
 @{
-    ViewData["Title"] = "Thêm sản phẩm mới";
+    ViewData["Title"] = "Thêm Sản Phẩm Mới";
 }
 
-<style>
-    .admin-card {
-        background: #fff;
-        border-radius: 1.1rem;
-        box-shadow: 0 4px 32px rgba(91,79,255,0.1);
-        padding: 2.5rem;
-        margin-top: 2rem;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .admin-card h2 {
-        font-weight: 800;
-        margin-bottom: 1.5rem;
-        color: #1a1d2e;
-    }
-    .form-group {
-        margin-bottom: 1.25rem;
-    }
-    .form-label {
-        font-weight: 600;
-        color: #5a6282;
-        margin-bottom: 0.5rem;
-    }
-    .form-control, .form-select {
-        border-radius: 0.5rem;
-        border: 1px solid rgba(100,110,180,0.2);
-        padding: 0.75rem 1rem;
-        font-size: 0.95rem;
-        width: 100%;
-        display: block;
-    }
-    .form-control:focus, .form-select:focus {
-        border-color: #5b4fff;
-        box-shadow: 0 0 0 0.25rem rgba(91,79,255,0.25);
-        outline: none;
-    }
-    .btn-primary {
-        background: linear-gradient(135deg, #5b4fff, #4338e0);
-        border: none;
-        border-radius: 3rem;
-        padding: 0.75rem 2.5rem;
-        font-weight: 700;
-        color: white;
-        box-shadow: 0 4px 15px rgba(91,79,255,0.3);
-        transition: transform 0.3s ease;
-    }
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(91,79,255,0.4);
-        color: white;
-    }
-    .btn-secondary {
-        border: 2px solid #e2e8f0;
-        background: transparent;
-        color: #475569;
-        border-radius: 3rem;
-        padding: 0.7rem 2.5rem;
-        font-weight: 600;
-        margin-right: 1rem;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        transition: all 0.2s;
-    }
-    .btn-secondary:hover {
-        background: #f1f5f9;
-        color: #1e293b;
-    }
-</style>
-
-<div class="pb-5">
-    <div class="admin-card">
-        <h2>Thêm sản phẩm mới</h2>
-        
-        <form asp-action="Add" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Name" class="form-label">Tên sản phẩm</label>
-                        <input asp-for="Name" class="form-control" placeholder="Nhập tên sản phẩm..." />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Price" class="form-label">Giá bán (VNĐ)</label>
-                        <input asp-for="Price" class="form-control" type="number" step="0.01" placeholder="Ví dụ: 150000" />
-                        <span asp-validation-for="Price" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="CategoryId" class="form-label">Danh mục</label>
-                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
-                            <option value="">-- Chọn danh mục --</option>
-                        </select>
-                        <span asp-validation-for="CategoryId" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label">Hình ảnh sản phẩm</label>
-                        <input type="file" name="imageFile" class="form-control" accept="image/*" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Description" class="form-label">Mô tả chi tiết</label>
-                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Nhập mô tả sản phẩm..."></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-
-            <div class="d-flex justify-content-end mt-4">
-                <a asp-action="Index" class="btn btn-secondary">Hủy bỏ</a>
-                <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
-            </div>
-        </form>
-    </div>
+<div class="section-header">
+    <h2 class="section-title">Thêm Sản Phẩm</h2>
+    <p class="section-subtitle">Tạo sản phẩm mới vào danh mục</p>
 </div>
+
+<div class="sidebar-widget">
+    <form asp-action="Add" method="post" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="widget-title">Tên sản phẩm</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Price" class="widget-title">Giá (₫)</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Description" class="widget-title">Mô tả</label>
+            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="CategoryId" class="widget-title">Danh mục</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
+        </div>
+        
+        <hr class="my-4" style="border-color: var(--clr-border);">
+        <h4 class="widget-title mb-3" style="color: var(--clr-primary);">Thông số kỹ thuật</h4>
+        
+        <div class="row" id="specs-container">
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="1,2,5">
+                <label asp-for="Processor" class="widget-title">CPU / Chip xử lý</label>
+                <input asp-for="Processor" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="2,5">
+                <label asp-for="Ram" class="widget-title">RAM</label>
+                <input asp-for="Ram" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="1,2">
+                <label asp-for="Screen" class="widget-title">Màn hình</label>
+                <input asp-for="Screen" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="2,5">
+                <label asp-for="GraphicsCard" class="widget-title">Card đồ họa (VGA)</label>
+                <input asp-for="GraphicsCard" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="1">
+                <label asp-for="Camera" class="widget-title">Camera</label>
+                <input asp-for="Camera" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="1,2,3">
+                <label asp-for="Battery" class="widget-title">Pin</label>
+                <input asp-for="Battery" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="1,2,5">
+                <label asp-for="Storage" class="widget-title">Bộ nhớ / Ổ cứng</label>
+                <input asp-for="Storage" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="1,2,5">
+                <label asp-for="Os" class="widget-title">Hệ điều hành</label>
+                <input asp-for="Os" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="2,3,5">
+                <label asp-for="Weight" class="widget-title">Trọng lượng</label>
+                <input asp-for="Weight" class="form-control" />
+            </div>
+
+            <!-- Audio Specs -->
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="3">
+                <label asp-for="Connectivity" class="widget-title">Kết nối</label>
+                <input asp-for="Connectivity" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="3">
+                <label asp-for="FrequencyResponse" class="widget-title">Tần số đáp ứng</label>
+                <input asp-for="FrequencyResponse" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="3">
+                <label asp-for="Impedance" class="widget-title">Trở kháng</label>
+                <input asp-for="Impedance" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="3">
+                <label asp-for="Sensitivity" class="widget-title">Độ nhạy</label>
+                <input asp-for="Sensitivity" class="form-control" />
+            </div>
+            <div class="col-md-6 form-group mb-3 spec-field" data-categories="3">
+                <label asp-for="AudioFormat" class="widget-title">Định dạng hỗ trợ</label>
+                <input asp-for="AudioFormat" class="form-control" />
+            </div>
+        </div>
+
+        <hr class="my-4" style="border-color: var(--clr-border);">
+        <div class="form-group mb-4">
+            <label asp-for="ImageUrl" class="widget-title">Hình ảnh đại diện</label>
+            <input type="file" asp-for="ImageUrl" class="form-control" />
+        </div>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn--primary">
+                <i class="fas fa-save"></i> Lưu Sản Phẩm
+            </button>
+            <a asp-action="Index" class="btn btn--secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        function updateSpecFields() {
+            var categoryId = document.getElementById('CategoryId').value;
+            var specFields = document.querySelectorAll('.spec-field');
+            
+            specFields.forEach(function(field) {
+                var categories = field.getAttribute('data-categories').split(',');
+                if (categories.includes(categoryId)) {
+                    field.style.display = 'block';
+                } else {
+                    field.style.display = 'none';
+                }
+            });
+        }
+
+        document.getElementById('CategoryId').addEventListener('change', updateSpecFields);
+        updateSpecFields(); // Chạy lúc mới load trang
+    </script>
+}
