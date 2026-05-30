@@ -1,5 +1,8 @@
+using KX_Project.Models;
 using KX_Project.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.IO;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 // Ensure the application runs from the project root so it can find the wwwroot folder
 var currentDir = Directory.GetCurrentDirectory();
@@ -14,14 +17,13 @@ if (!Directory.Exists(Path.Combine(currentDir, "wwwroot")))
 }
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<IProductRepository,
-MockProductRepository>();
-builder.Services.AddScoped<ICategoryRepository,
-MockCategoryRepository>();
+builder.Services.AddScoped<IProductRepository, EFProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
 
 var app = builder.Build();
 

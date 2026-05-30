@@ -70,14 +70,20 @@
   </section>
   }
 
+  @{
+      bool isIndex = ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "Product";
+  }
+
   <!-- ========== MAIN (2 columns) ========== -->
-  <main class="main-grid" id="products">
+  <main class="main-grid" id="products" style="@(isIndex ? "" : "grid-template-columns: 1fr;")">
     <!-- ===== LEFT: MAIN CONTENT ===== -->
     <section class="products-section">
       @RenderBody()
     </section>
 
     <!-- ===== RIGHT: SIDEBAR ===== -->
+    @if (isIndex)
+    {
     <aside class="sidebar" id="social">
       <!-- Theo dõi chúng tôi -->
       <div class="sidebar-widget" id="widget-social">
@@ -120,6 +126,7 @@
         </button>
       </div>
     </aside>
+    }
   </main>
 
   <!-- ========== FOOTER ========== -->

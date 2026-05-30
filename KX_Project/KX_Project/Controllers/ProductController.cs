@@ -2,151 +2,164 @@ using KX_Project.Models;
 using KX_Project.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
-public class ProductController : Controller
+namespace ProjectName.Controllers
 {
-    private readonly IProductRepository _productRepository;
-    private readonly ICategoryRepository _categoryRepository;
-    private readonly IWebHostEnvironment _hostingEnvironment;
-    public ProductController(IProductRepository productRepository,
-    ICategoryRepository categoryRepository,
-    IWebHostEnvironment hostingEnvironment)
+    public class ProductController : Controller
     {
-        _productRepository = productRepository;
-        _categoryRepository = categoryRepository;
-        _hostingEnvironment = hostingEnvironment;
-    }
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        public ProductController(IProductRepository productRepository,
+        ICategoryRepository categoryRepository)
+        {
+            _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
+        }
+        // Hiển thị danh sách sản phẩm
+        public async Task<IActionResult> Index()
+        {
+            var products = await _productRepository.GetAllAsync();
+            return View(products);
+        }
+        // Hiển thị form thêm sản phẩm mới
+        public async Task<IActionResult> Add()
+        {
+            var categories = await _categoryRepository.GetAllAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            return View();
+        }
+        // Xử lý thêm sản phẩm mới
+        [HttpPost]
+        public async Task<IActionResult> Add(Product product, IFormFile
+        imageUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                if (imageUrl != null)
+                {
+                    // Lưu hình ảnh đại diện tham khảo bài 02 hàm SaveImage
 
-    public IActionResult Add()
-    {
-        var categories = _categoryRepository.GetAllCategories();
-        ViewBag.Categories = new SelectList(categories, "Id", "Name");
-        return View();
-    }
-    [HttpPost]
-    public IActionResult Add(Product product, IFormFile? imageFile)
-    {
-        if (ModelState.IsValid)
-        {
-            if (imageFile != null && imageFile.Length > 0)
-            {
-                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
+                    product.ImageUrl = await SaveImage(imageUrl);
+
                 }
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    imageFile.CopyTo(fileStream);
-                }
-                product.ImageUrl = "/images/" + uniqueFileName;
+                await _productRepository.AddAsync(product);
+                return RedirectToAction(nameof(Index));
             }
-            _productRepository.Add(product);
-            return RedirectToAction("Index"); // Chuyển hướng tới trang danh sách sản phẩm
+            // Nếu ModelState không hợp lệ, hiển thị form với dữ liệu đã nhập
+            var categories = await _categoryRepository.GetAllAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            return View(product);
         }
-        var categories = _categoryRepository.GetAllCategories();
-        ViewBag.Categories = new SelectList(categories, "Id", "Name");
-        return View(product);
-    }
-    // Các actions khác như Display, Update, Delete
-    // Display a list of products
-    public IActionResult Index()
-    {
-        var products = _productRepository.GetAll();
-        return View(products);
-    }
-    // Display a single product
-    public IActionResult Display(int id)
-    {
-        var product = _productRepository.GetById(id);
-        if (product == null)
+        // Viết thêm hàm SaveImage (tham khảo bài 02)
+        private async Task<string> SaveImage(IFormFile image)
         {
-            return NotFound();
-        }
-        var relatedProducts = _productRepository.GetAll()
-            .Where(p => p.Id != id && p.CategoryId == product.CategoryId)
-            .Take(4)
-            .ToList();
-        
-        // If not enough products in same category, get any
-        if (relatedProducts.Count < 4)
-        {
-            var moreProducts = _productRepository.GetAll()
-                .Where(p => p.Id != id && !relatedProducts.Any(rp => rp.Id == p.Id))
-                .Take(4 - relatedProducts.Count)
-                .ToList();
-            relatedProducts.AddRange(moreProducts);
-        }
-        
-        ViewBag.RelatedProducts = relatedProducts;
-        return View(product);
-    }
-    // Show the product update form
-    public IActionResult Update(int id)
-    {
-        var product = _productRepository.GetById(id);
-        if (product == null)
-        {
-            return NotFound();
-        }
-        var categories = _categoryRepository.GetAllCategories();
-        ViewBag.Categories = new SelectList(categories, "Id", "Name");
-        return View(product);
-    }
-    // Process the product update
-    [HttpPost]
-    public IActionResult Update(Product product, IFormFile? imageFile)
-    {
-        if (ModelState.IsValid)
-        {
-            if (imageFile != null && imageFile.Length > 0)
+            //Thay đổi đường dẫn theo cấu hình của bạn
+            var savePath = Path.Combine("wwwroot/images", image.FileName);
+            using (var fileStream = new FileStream(savePath, FileMode.Create))
             {
-                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    imageFile.CopyTo(fileStream);
-                }
-                product.ImageUrl = "/images/" + uniqueFileName;
+                await image.CopyToAsync(fileStream);
             }
-            else
+            return "/images/" + image.FileName; // Trả về đường dẫn tương đối
+        }
+        //Nhớ tạo folder images trong wwwroot
+        // Hiển thị thông tin chi tiết sản phẩm
+        public async Task<IActionResult> Display(int id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null)
             {
-                // Giữ nguyên ảnh cũ nếu không upload ảnh mới
-                var existingProduct = _productRepository.GetById(product.Id);
-                if (existingProduct != null)
+                return NotFound();
+            }
+            return View(product);
+        }
+        // Hiển thị form cập nhật sản phẩm
+        public async Task<IActionResult> Update(int id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var categories = await _categoryRepository.GetAllAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name",
+            product.CategoryId);
+            return View(product);
+        }
+        // Xử lý cập nhật sản phẩm
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, Product product,
+        IFormFile imageUrl)
+        {
+            ModelState.Remove("ImageUrl"); // Loại bỏ xác thực ModelState cho ImageUrl
+        if (id != product.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                var existingProduct = await
+                _productRepository.GetByIdAsync(id); // Giả định có phương thức GetByIdAsync
+                                                     // Giữ nguyên thông tin hình ảnh nếu không có hình mới được tải lên
+            if (imageUrl == null)
                 {
                     product.ImageUrl = existingProduct.ImageUrl;
                 }
+                else
+                {
+                    // Lưu hình ảnh mới
+
+                    product.ImageUrl = await SaveImage(imageUrl);
+
+                }
+                // Cập nhật các thông tin khác của sản phẩm
+                existingProduct.Name = product.Name;
+                existingProduct.Price = product.Price;
+                existingProduct.Description = product.Description;
+                existingProduct.CategoryId = product.CategoryId;
+                existingProduct.ImageUrl = product.ImageUrl;
+                
+                // Cập nhật thông số kỹ thuật (Điện thoại)
+                existingProduct.Processor = product.Processor;
+                existingProduct.Screen = product.Screen;
+                existingProduct.Camera = product.Camera;
+                existingProduct.Battery = product.Battery;
+                existingProduct.Storage = product.Storage;
+                existingProduct.Os = product.Os;
+                
+                // Cập nhật thông số kỹ thuật (Laptop, Desktop)
+                existingProduct.Ram = product.Ram;
+                existingProduct.GraphicsCard = product.GraphicsCard;
+                existingProduct.Weight = product.Weight;
+                
+                // Cập nhật thông số kỹ thuật (Âm thanh)
+                existingProduct.Connectivity = product.Connectivity;
+                existingProduct.FrequencyResponse = product.FrequencyResponse;
+                existingProduct.Impedance = product.Impedance;
+                existingProduct.Sensitivity = product.Sensitivity;
+                existingProduct.AudioFormat = product.AudioFormat;
+
+                await _productRepository.UpdateAsync(existingProduct);
+                return RedirectToAction(nameof(Index));
             }
-            _productRepository.Update(product);
-            return RedirectToAction("Index");
+            var categories = await _categoryRepository.GetAllAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            return View(product);
         }
-        var categories = _categoryRepository.GetAllCategories();
-        ViewBag.Categories = new SelectList(categories, "Id", "Name");
-        return View(product);
-    }
-    // Show the product delete confirmation
-    public IActionResult Delete(int id)
-    {
-        var product = _productRepository.GetById(id);
-        if (product == null)
+        // Hiển thị form xác nhận xóa sản phẩm
+        public async Task<IActionResult> Delete(int id)
         {
-            return NotFound();
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
         }
-        return View(product);
-    }
-    // Process the product deletion
-    [HttpPost, ActionName("DeleteConfirmed")]
-    public IActionResult DeleteConfirmed(int id)
-    {
-        _productRepository.Delete(id);
-        return RedirectToAction("Index");
+        // Xử lý xóa sản phẩm
+        [HttpPost, ActionName("DeleteConfirmed")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _productRepository.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
