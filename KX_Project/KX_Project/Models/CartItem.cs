@@ -16,6 +16,6 @@ namespace KX_Project.Models
 
         public string UserId { get; set; } = null!;
         [ForeignKey("UserId")]
-        public IdentityUser? User { get; set; }
+        public ApplicationUser? User { get; set; }
     }
 }

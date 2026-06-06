@@ -1,0 +1,52 @@
+@model KX_Project.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+}
+
+<div class="container mt-4" style="max-width: 800px;">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+            <h2 class="h4 mb-0"><i class="fa-solid fa-user text-primary me-2"></i> Thông tin cá nhân</h2>
+            <p class="text-muted mt-1" style="font-size: 0.9rem;">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+        </div>
+        <div class="card-body p-4">
+            <form asp-action="Index" method="post">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Email (Tên đăng nhập)</label>
+                    <input type="email" class="form-control bg-light" value="@Model.Email" readonly disabled />
+                    <div class="form-text">Bạn có thể thay đổi Email trong mục <a asp-action="Security" class="text-decoration-none">Bảo mật tài khoản</a>.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold" for="FullName">Họ và tên</label>
+                    <input type="text" class="form-control" id="FullName" name="FullName" value="@Model.FullName" placeholder="Nhập họ và tên của bạn" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold" for="PhoneNumber">Số điện thoại</label>
+                    <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="Nhập số điện thoại liên hệ" />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold" for="Address">Địa chỉ mặc định</label>
+                    <textarea class="form-control" id="Address" name="Address" rows="3" placeholder="Nhập địa chỉ giao hàng thường xuyên của bạn">@Model.Address</textarea>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn--primary"><i class="fa-solid fa-save me-1"></i> Lưu thay đổi</button>
+                    <a asp-controller="Product" asp-action="Index" class="btn btn--secondary">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -233,6 +233,7 @@ button {
   border-radius: var(--radius-sm);
   font-size: 0.9rem;
   font-weight: 500;
+  white-space: nowrap;
   color: var(--clr-text-muted);
   transition: var(--trans-fast);
 }
