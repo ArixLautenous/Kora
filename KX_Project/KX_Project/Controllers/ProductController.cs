@@ -1,5 +1,6 @@
 using KX_Project.Models;
 using KX_Project.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 namespace ProjectName.Controllers
@@ -21,6 +22,7 @@ namespace ProjectName.Controllers
             return View(products);
         }
         // Hiển thị form thêm sản phẩm mới
+        [Authorize(Roles = "Admin,Staff")]
         public async Task<IActionResult> Add()
         {
             var categories = await _categoryRepository.GetAllAsync();
@@ -29,6 +31,7 @@ namespace ProjectName.Controllers
         }
         // Xử lý thêm sản phẩm mới
         [HttpPost]
+        [Authorize(Roles = "Admin,Staff")]
         public async Task<IActionResult> Add(Product product, IFormFile
         imageUrl)
         {
@@ -72,6 +75,7 @@ namespace ProjectName.Controllers
             return View(product);
         }
         // Hiển thị form cập nhật sản phẩm
+        [Authorize(Roles = "Admin,Staff")]
         public async Task<IActionResult> Update(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
@@ -86,6 +90,7 @@ namespace ProjectName.Controllers
         }
         // Xử lý cập nhật sản phẩm
         [HttpPost]
+        [Authorize(Roles = "Admin,Staff")]
         public async Task<IActionResult> Update(int id, Product product,
         IFormFile imageUrl)
         {
@@ -145,6 +150,7 @@ namespace ProjectName.Controllers
             return View(product);
         }
         // Hiển thị form xác nhận xóa sản phẩm
+        [Authorize(Roles = "Admin,Staff")]
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
@@ -156,6 +162,7 @@ namespace ProjectName.Controllers
         }
         // Xử lý xóa sản phẩm
         [HttpPost, ActionName("DeleteConfirmed")]
+        [Authorize(Roles = "Admin,Staff")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _productRepository.DeleteAsync(id);

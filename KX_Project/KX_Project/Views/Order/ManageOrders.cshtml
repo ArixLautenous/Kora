@@ -1,0 +1,67 @@
+@model IEnumerable<KX_Project.Models.Order>
+
+@{
+    ViewData["Title"] = "Quản Lý Đơn Hàng";
+}
+
+<div class="section-header">
+    <h2 class="section-title">Quản Lý Đơn Hàng</h2>
+    <p class="section-subtitle">Duyệt và cập nhật trạng thái đơn hàng của khách</p>
+</div>
+
+<div class="sidebar-widget">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Mã ĐH</th>
+                <th>Khách hàng</th>
+                <th>SĐT / Địa chỉ</th>
+                <th>Tổng tiền</th>
+                <th>Ngày đặt</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td class="fw-bold">#@order.Id</td>
+                    <td>@order.User?.Email</td>
+                    <td>
+                        <small><strong>@order.PhoneNumber</strong></small><br/>
+                        <small class="text-muted">@order.ShippingAddress</small>
+                    </td>
+                    <td class="text-danger fw-bold">@order.TotalAmount.ToString("N0") ₫</td>
+                    <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        @{
+                            string badgeClass = order.Status switch {
+                                "Pending" => "bg-warning text-dark",
+                                "Processing" => "bg-info text-dark",
+                                "Shipped" => "bg-primary",
+                                "Delivered" => "bg-success",
+                                "Cancelled" => "bg-danger",
+                                _ => "bg-secondary"
+                            };
+                        }
+                        <span class="badge @badgeClass p-2">@order.Status</span>
+                    </td>
+                    <td>
+                        <form asp-action="UpdateStatus" method="post" class="d-flex gap-2">
+                            <input type="hidden" name="id" value="@order.Id" />
+                            <select name="status" class="form-select form-select-sm" style="width: 120px;">
+                                <option value="Pending" selected="@(order.Status == "Pending")">Pending</option>
+                                <option value="Processing" selected="@(order.Status == "Processing")">Processing</option>
+                                <option value="Shipped" selected="@(order.Status == "Shipped")">Shipped</option>
+                                <option value="Delivered" selected="@(order.Status == "Delivered")">Delivered</option>
+                                <option value="Cancelled" selected="@(order.Status == "Cancelled")">Cancelled</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-save"></i> Lưu</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

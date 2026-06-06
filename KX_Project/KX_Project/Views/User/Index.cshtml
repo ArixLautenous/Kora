@@ -1,0 +1,68 @@
+@model IEnumerable<KX_Project.ViewModels.UserRoleViewModel>
+
+@{
+    ViewData["Title"] = "Quản Lý Tài Khoản";
+}
+
+<div class="section-header d-flex justify-content-between align-items-center">
+    <div>
+        <h2 class="section-title">Quản Lý Tài Khoản</h2>
+        <p class="section-subtitle">Xem danh sách người dùng và phân quyền hệ thống</p>
+    </div>
+</div>
+
+<div class="sidebar-widget">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Quyền hiện tại</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td class="fw-bold">@user.Email</td>
+                    <td>
+                        @string.Join(", ", user.Roles)
+                    </td>
+                    <td>
+                        @if (user.IsLockedOut)
+                        {
+                            <span class="badge bg-danger p-2"><i class="fa-solid fa-lock"></i> Đã khóa</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success p-2"><i class="fa-solid fa-check-circle"></i> Hoạt động</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <form asp-action="ChangeRole" method="post" class="d-flex gap-2 align-items-center">
+                                <input type="hidden" name="userId" value="@user.UserId" />
+                                <select name="newRole" class="form-select form-select-sm" style="width: auto;">
+                                    <option value="Customer">Customer</option>
+                                    <option value="Staff">Staff</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa-solid fa-sync-alt"></i> Cấp quyền
+                                </button>
+                            </form>
+                            <form asp-action="ToggleLock" method="post">
+                                <input type="hidden" name="userId" value="@user.UserId" />
+                                <button type="submit" class="btn btn-sm @(user.IsLockedOut ? "btn-outline-success" : "btn-outline-danger")">
+                                    <i class="fa-solid @(user.IsLockedOut ? "fa-unlock" : "fa-lock")"></i> 
+                                    @(user.IsLockedOut ? "Mở khóa" : "Khóa")
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

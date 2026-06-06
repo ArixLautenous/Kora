@@ -1,0 +1,91 @@
+@model KX_Project.Models.Order
+
+@{
+    ViewData["Title"] = "Thanh toán";
+    var cartItems = ViewBag.CartItems as IEnumerable<KX_Project.Models.CartItem>;
+    var totalAmount = ViewBag.TotalAmount as decimal? ?? 0;
+}
+
+<div class="section-header">
+    <h2 class="section-title">Thanh toán đơn hàng</h2>
+    <p class="section-subtitle">Vui lòng điền thông tin giao hàng của bạn</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-7">
+        <div class="sidebar-widget">
+            <h4 class="widget-title mb-4"><i class="fa-solid fa-truck-fast me-2 text-primary"></i> Thông tin giao hàng</h4>
+            
+            <form asp-action="Checkout" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="ShippingAddress" class="widget-title">Địa chỉ nhận hàng</label>
+                    <input asp-for="ShippingAddress" class="form-control" placeholder="Số nhà, Tên đường, Quận/Huyện, Tỉnh/Thành phố" />
+                    <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="PhoneNumber" class="widget-title">Số điện thoại liên hệ</label>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="Nhập số điện thoại để shipper gọi" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="widget-title">Phương thức thanh toán</label>
+                    <div class="form-check p-3 border rounded">
+                        <input class="form-check-input ms-1" type="radio" name="paymentMethod" id="paymentCOD" value="COD" checked>
+                        <label class="form-check-label ms-2 font-weight-bold" for="paymentCOD">
+                            Thanh toán khi nhận hàng (COD)
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn--primary btn--full mt-2" style="height: 50px; font-size: 1.1rem;">
+                    Xác nhận Đặt hàng <i class="fa-solid fa-check ms-2"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-5 mt-4 mt-lg-0">
+        <div class="sidebar-widget" style="background: #f8f9fa;">
+            <h4 class="widget-title mb-4">Tóm tắt đơn hàng</h4>
+            
+            @if(cartItems != null)
+            {
+                <div class="mb-4" style="max-height: 300px; overflow-y: auto;">
+                    @foreach (var item in cartItems)
+                    {
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="@item.Product.ImageUrl" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px; margin-right: 15px;" />
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0" style="font-size: 0.9rem;">@item.Product.Name</h6>
+                                <small class="text-muted">x @item.Quantity</small>
+                            </div>
+                            <span class="fw-bold" style="font-size: 0.9rem;">@((item.Product.Price * item.Quantity).ToString("N0")) ₫</span>
+                        </div>
+                    }
+                </div>
+            }
+
+            <hr />
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Tạm tính</span>
+                <span class="fw-bold">@totalAmount.ToString("N0") ₫</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span class="text-muted">Phí giao hàng</span>
+                <span class="text-success fw-bold">Miễn phí</span>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between mb-2">
+                <span class="fs-5 fw-bold">Tổng thanh toán</span>
+                <span class="fs-4 fw-bold text-danger">@totalAmount.ToString("N0") ₫</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

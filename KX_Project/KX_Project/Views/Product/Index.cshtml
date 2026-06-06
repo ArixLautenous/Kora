@@ -5,11 +5,14 @@
     <p class="section-subtitle">Khám phá bộ sưu tập của chúng tôi</p>
 </div>
 
-<div class="mb-4">
-    <a asp-action="Add" class="btn btn--primary">
-        <i class="fas fa-plus"></i> Thêm sản phẩm mới
-    </a>
-</div>
+@if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+{
+    <div class="mb-4">
+        <a asp-action="Add" class="btn btn--primary">
+            <i class="fas fa-plus"></i> Thêm sản phẩm mới
+        </a>
+    </div>
+}
 
 <div class="product-grid">
     @foreach (var product in Model)
@@ -34,10 +37,13 @@
                     <div class="product-card__price">
                         <span class="price--current">@product.Price.ToString("N0") ₫</span>
                     </div>
-                    <div class="product-card__actions">
-                        <a asp-action="Update" asp-route-id="@product.Id" class="btn btn--secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Sửa</a>
-                        <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn--secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; color: #ff3f61; border-color: rgba(255, 63, 97, 0.3);">Xóa</a>
-                    </div>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+                    {
+                        <div class="product-card__actions">
+                            <a asp-action="Update" asp-route-id="@product.Id" class="btn btn--secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Sửa</a>
+                            <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn--secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; color: #ff3f61; border-color: rgba(255, 63, 97, 0.3);">Xóa</a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

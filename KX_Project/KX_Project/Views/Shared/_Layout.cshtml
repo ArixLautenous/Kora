@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 <html lang="vi">
 
 <head>
@@ -42,11 +45,63 @@
               <i class="fa-solid fa-box-open"></i> Sản phẩm
             </a>
           </li>
-          <li class="nav__item">
-            <a asp-controller="Product" asp-action="Add" class="nav__link">
-              <i class="fa-solid fa-plus"></i> Thêm mới
-            </a>
-          </li>
+          @if (SignInManager.IsSignedIn(User))
+          {
+              if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+              {
+                  <li class="nav__item">
+                    <a asp-controller="Product" asp-action="Add" class="nav__link">
+                      <i class="fa-solid fa-plus"></i> Thêm SP
+                    </a>
+                  </li>
+                  <li class="nav__item">
+                    <a asp-controller="Order" asp-action="ManageOrders" class="nav__link">
+                      <i class="fa-solid fa-boxes-packing"></i> Đơn hàng
+                    </a>
+                  </li>
+              }
+              if (User.IsInRole("Admin"))
+              {
+                  <li class="nav__item">
+                    <a asp-controller="User" asp-action="Index" class="nav__link">
+                      <i class="fa-solid fa-users"></i> Users
+                    </a>
+                  </li>
+                  <li class="nav__item">
+                    <a asp-controller="Report" asp-action="Index" class="nav__link text-warning">
+                      <i class="fa-solid fa-chart-pie"></i> Báo cáo
+                    </a>
+                  </li>
+              }
+              <li class="nav__item ms-2">
+                <a asp-controller="Cart" asp-action="Index" class="nav__link position-relative">
+                  <i class="fa-solid fa-cart-shopping"></i> Giỏ hàng
+                </a>
+              </li>
+              <li class="nav__item d-flex align-items-center ms-3">
+                  <span class="text-muted me-3" style="font-size: 0.9rem;">
+                      <i class="fa-solid fa-user-circle text-primary"></i> Xin chào, <strong>@User.Identity?.Name</strong>
+                  </span>
+                  <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                      <button type="submit" class="btn btn--secondary btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+                          Đăng xuất <i class="fa-solid fa-sign-out-alt ms-1"></i>
+                      </button>
+                  </form>
+              </li>
+          }
+          else
+          {
+              <li class="nav__item ms-2">
+                <a asp-controller="Account" asp-action="Login" class="nav__link">
+                  <i class="fa-solid fa-sign-in-alt"></i> Đăng nhập
+                </a>
+              </li>
+              <li class="nav__item ms-1">
+                <a asp-controller="Account" asp-action="Register" class="btn btn--primary btn-sm" style="padding: 0.5rem 1rem;">
+                  Đăng ký
+                </a>
+              </li>
+          }
         </ul>
       </nav>
     </div>

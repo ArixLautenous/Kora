@@ -1,0 +1,57 @@
+@model KX_Project.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<div class="row justify-content-center mt-5 mb-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="sidebar-widget" style="padding: 3rem; border-radius: 1.5rem;">
+            <div class="text-center mb-4">
+                <i class="fa-solid fa-user-plus fa-4x text-primary mb-3" style="color: var(--clr-primary);"></i>
+                <h2 style="font-weight: 800;">Đăng ký tài khoản</h2>
+                <p class="text-muted">Tạo tài khoản để nhận nhiều ưu đãi từ KoraStore</p>
+            </div>
+
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3 font-weight-bold"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="FullName" class="widget-title">Họ và tên</label>
+                    <input asp-for="FullName" class="form-control" placeholder="Nhập họ và tên" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Email" class="widget-title">Email</label>
+                    <input asp-for="Email" class="form-control" placeholder="Nhập địa chỉ email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Password" class="widget-title">Mật khẩu</label>
+                    <input asp-for="Password" class="form-control" placeholder="Nhập mật khẩu (tối thiểu 6 ký tự)" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="ConfirmPassword" class="widget-title">Xác nhận mật khẩu</label>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Nhập lại mật khẩu" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn--primary btn--full mb-3" style="height: 50px; font-size: 1.1rem;">
+                    <i class="fas fa-user-check me-2"></i> Tạo tài khoản
+                </button>
+            </form>
+
+            <div class="text-center mt-4 pt-3 border-top">
+                <p class="mb-0 text-muted">Đã có tài khoản? <a asp-action="Login" style="color: var(--clr-primary); font-weight: 600; text-decoration: none;">Đăng nhập</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
