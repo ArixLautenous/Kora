@@ -50,12 +50,17 @@ else
                                 </td>
                                 <td><span class="text-danger fw-bold">@item.Product.Price.ToString("N0") ₫</span></td>
                                 <td>
-                                    <form asp-action="UpdateQuantity" method="post" class="d-flex align-items-center" style="max-width: 120px;">
+                                    <form asp-action="UpdateQuantity" method="post" class="d-flex align-items-center" style="max-width: 130px;">
                                         <input type="hidden" name="id" value="@item.Id" />
-                                        <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control form-control-sm text-center me-1" style="width: 60px;" />
-                                        <button type="submit" class="btn btn-outline-primary btn-sm" title="Cập nhật">
-                                            <i class="fa-solid fa-arrows-rotate"></i>
-                                        </button>
+                                        <div class="input-group input-group-sm shadow-sm rounded">
+                                            <button class="btn btn-outline-secondary px-2 border-end-0" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown(); this.closest('form').submit();">
+                                                <i class="fa-solid fa-minus"></i>
+                                            </button>
+                                            <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control text-center px-1 fw-bold border-secondary border-start-0 border-end-0" style="appearance: textfield;" onchange="this.closest('form').submit();" />
+                                            <button class="btn btn-outline-secondary px-2 border-start-0" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp(); this.closest('form').submit();">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </div>
                                     </form>
                                 </td>
                                 <td>
