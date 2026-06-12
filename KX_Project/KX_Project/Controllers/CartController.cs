@@ -58,7 +58,33 @@ namespace KX_Project.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
+        }
+
+        // Cập nhật số lượng sản phẩm trong giỏ hàng
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(int id, int quantity)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Challenge();
+
+            var cartItem = await _context.CartItems
+                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == user.Id);
+
+            if (cartItem != null)
+            {
+                if (quantity > 0)
+                {
+                    cartItem.Quantity = quantity;
+                }
+                else
+                {
+                    _context.CartItems.Remove(cartItem);
+                }
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
         }
 
         // Xóa sản phẩm khỏi giỏ hàng

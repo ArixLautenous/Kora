@@ -50,7 +50,13 @@ else
                                 </td>
                                 <td><span class="text-danger fw-bold">@item.Product.Price.ToString("N0") ₫</span></td>
                                 <td>
-                                    <span class="badge bg-secondary p-2">@item.Quantity</span>
+                                    <form asp-action="UpdateQuantity" method="post" class="d-flex align-items-center" style="max-width: 120px;">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control form-control-sm text-center me-1" style="width: 60px;" />
+                                        <button type="submit" class="btn btn-outline-primary btn-sm" title="Cập nhật">
+                                            <i class="fa-solid fa-arrows-rotate"></i>
+                                        </button>
+                                    </form>
                                 </td>
                                 <td>
                                     <span class="text-danger fw-bold">@((item.Product.Price * item.Quantity).ToString("N0")) ₫</span>
