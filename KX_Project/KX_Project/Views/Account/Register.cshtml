@@ -46,7 +46,16 @@
             </form>
 
             <div class="text-center mt-4 pt-3 border-top">
-                <p class="mb-0 text-muted">Đã có tài khoản? <a asp-action="Login" style="color: var(--clr-primary); font-weight: 600; text-decoration: none;">Đăng nhập</a></p>
+                <p class="mb-3 text-muted">Hoặc đăng ký bằng</p>
+                <form asp-action="ExternalLogin" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" class="d-inline">
+                    <input type="hidden" name="provider" value="Google" />
+                    <button type="submit" class="btn w-100 mb-4" style="border: 1px solid #dadce0; border-radius: 8px; font-weight: 500; color: #3c4043; height: 48px; background-color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f8f9fa'" onmouseout="this.style.backgroundColor='#fff'">
+                        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" style="width: 20px; height: 20px;" />
+                        Đăng nhập bằng Google
+                    </button>
+                </form>
+
+                <p class="mb-0 text-muted">Đã có tài khoản? <a asp-action="Login" style="color: var(--clr-primary); font-weight: 600; text-decoration: none;">Đăng nhập ngay</a></p>
             </div>
         </div>
     </div>

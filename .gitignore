@@ -42,6 +42,8 @@ appsettings.Production.json
 secrets.json
 *.pfx
 *.p12
+.env
+.env.*
 
 # Static file cache
 wwwroot/lib/

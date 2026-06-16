@@ -3,7 +3,9 @@ using KX_Project.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using DotNetEnv;
+
+Env.Load();
 
 // Ensure the application runs from the project root so it can find the wwwroot folder
 var currentDir = Directory.GetCurrentDirectory();
@@ -23,6 +25,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID") ?? "MISSING_CLIENT_ID";
+        options.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_SECRET") ?? "MISSING_CLIENT_SECRET";
+    });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
