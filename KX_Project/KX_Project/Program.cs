@@ -43,6 +43,12 @@ builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
+// Thêm cấu hình cho Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+QuestPDF.Settings.License = LicenseType.Community;
+
 QuestPDF.Settings.License = LicenseType.Community;
 
 var app = builder.Build();
@@ -69,7 +75,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "KoraStore API v1");
+    // Tuỳ chọn: c.RoutePrefix = string.Empty; để Swagger UI ở trang chủ, nhưng mình để mặc định ở /swagger
+});
+
+app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthentication();
