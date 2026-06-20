@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using DotNetEnv;
-
-Env.Load();
+using KX_Project.Services;
+using QuestPDF.Infrastructure;
 
 // Ensure the application runs from the project root so it can find the wwwroot folder
 var currentDir = Directory.GetCurrentDirectory();
@@ -18,6 +18,9 @@ if (!Directory.Exists(Path.Combine(currentDir, "wwwroot")))
         Directory.SetCurrentDirectory(projectDir);
     }
 }
+
+// Load environment variables after setting correct directory
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -38,6 +41,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 var app = builder.Build();
 

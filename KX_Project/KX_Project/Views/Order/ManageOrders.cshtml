@@ -4,9 +4,12 @@
     ViewData["Title"] = "Quản Lý Đơn Hàng";
 }
 
-<div class="section-header">
-    <h2 class="section-title">Quản Lý Đơn Hàng</h2>
-    <p class="section-subtitle">Duyệt và cập nhật trạng thái đơn hàng của khách</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="section-header mb-0">
+        <h2 class="section-title">Quản Lý Đơn Hàng</h2>
+        <p class="section-subtitle">Duyệt và cập nhật trạng thái đơn hàng của khách</p>
+    </div>
+    <a asp-action="ExportOrdersToExcel" class="btn btn-success"><i class="fa-solid fa-file-excel"></i> Xuất Excel</a>
 </div>
 
 <div class="sidebar-widget">
@@ -48,8 +51,8 @@
                         <span class="badge @badgeClass p-2">@order.Status</span>
                     </td>
                     <td>
-                        <form asp-action="UpdateStatus" method="post" class="d-flex gap-2">
-                            <input type="hidden" name="id" value="@order.Id" />
+                        <form asp-action="UpdateOrderStatus" method="post" class="d-flex gap-2 align-items-center">
+                            <input type="hidden" name="orderId" value="@order.Id" />
                             <select name="status" class="form-select form-select-sm" style="width: 120px;">
                                 <option value="Pending" selected="@(order.Status == "Pending")">Pending</option>
                                 <option value="Processing" selected="@(order.Status == "Processing")">Processing</option>
@@ -57,7 +60,8 @@
                                 <option value="Delivered" selected="@(order.Status == "Delivered")">Delivered</option>
                                 <option value="Cancelled" selected="@(order.Status == "Cancelled")">Cancelled</option>
                             </select>
-                            <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-save"></i> Lưu</button>
+                            <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-save"></i></button>
+                            <a asp-action="DownloadInvoice" asp-route-id="@order.Id" class="btn btn-sm btn-outline-danger" title="In PDF"><i class="fa-solid fa-file-pdf"></i></a>
                         </form>
                     </td>
                 </tr>
